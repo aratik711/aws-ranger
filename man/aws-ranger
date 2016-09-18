@@ -1,0 +1,36 @@
+.\" Manpage for aws-ranger.
+.\" Contact arati.kulkarni@atos.net to correct errors or typos.
+.TH man 8 "13 September 2016" "1.0" "aws-ranger man page"
+.SH NAME
+aws-ranger \- Monitor and manage AWS resources
+.SH SYNOPSIS
+aws-ranger [--delete-all-vms region] [--delete-key-pairs [region]] [-h]
+.SH DESCRIPTION
+aws-ranger is AWS resource monitoring and mangement tools. You can use for cleaning up the unused resources in your AWS account.
+.SH OPTIONS
+.IP aws-ranger
+Deletes orphan(unnamed) VMs from all the regions of AWS.
+.IP -h|--help|--info
+Displays the help for the command.
+.IP "--delete-all-vms region"
+Deletes all the VMs in the specified region.
+.IP "--delete-key-pairs [region]"
+Deletes unused key-pairs from all the regions in AWS. When specified with a region will delete key-pairs from the given region on AWS.
+.IP --region|--regions
+Displays a detailed list of regions available at AWS
+.SH EXAMPLES
+.IP "aws-ranger --delete-all-vms us-west-1"
+This will delete all the VMs (running|stopped) from us-west-1 region.
+.IP "aws-ranger --delete-key-pairs us-west-1"
+This will delete all the unused key-pairs (The ones not associated with any VM) from us-west-1 region.
+.IP "aws-ranger --delete-key-pairs"
+This will delete all unused key-pairs from all the regions.
+.SH NOTE
+Regions available in AWS are as follows:
+.B us-east-1 us-west-2 us-west-1 eu-west-1 ap-southeast-1 ap-northeast-1 ap-southeast-2 sa-east-1 eu-central-1 ap-south-1 
+.SH SEE ALSO
+aws ec2
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Arati Kulkarni (arati.kulkarni@atos.net)
