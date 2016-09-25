@@ -73,8 +73,8 @@ function monitor_region
 function del_sec_groups
 {
 	region=$1
-	all_sec_groups=($(aws ec2 describe-security-groups --region=$region --output text --query 'SecurityGroups[*].[GroupName]' | grep 'jclouds#brooklyn-'))
-        vm_sec_groups=($(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].[SecurityGroups[*].[GroupName]]' --output text  --region=$region | grep 'jclouds#brooklyn-'))
+	all_sec_groups=($(aws ec2 describe-security-groups --region=$region --output text --query 'SecurityGroups[*].[GroupName]' ))
+        vm_sec_groups=($(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].[SecurityGroups[*].[GroupName]]' --output text  --region=$region))
         unused_sec_groups=($(echo ${all_sec_groups[@]} ${vm_sec_groups[@]} | tr ' ' '\n' | sort | uniq -u ))
 	for un_sg in "${unused_sec_groups[@]}"
         do
@@ -88,8 +88,8 @@ function del_sec_groups
 function del_key_pairs_region
 {
 	region=$1
-	all_key_pairs=($(aws ec2 describe-key-pairs  --query 'KeyPairs[*].[KeyName]'  --region=$region --output text  | grep 'jclouds#brooklyn-'))
-	vm_key_pairs=($(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].[State.Name,KeyName]' --output text  --region=$region | grep -E -v 'terminated' | awk '{ print $2 }' | grep 'jclouds#brooklyn-'))
+	all_key_pairs=($(aws ec2 describe-key-pairs  --query 'KeyPairs[*].[KeyName]'  --region=$region --output text  ))
+	vm_key_pairs=($(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].[State.Name,KeyName]' --output text  --region=$region | grep -E -v 'terminated' | awk '{ print $2 }' ))
 	unused_key_pairs=($(echo ${all_key_pairs[@]} ${vm_key_pairs[@]} | tr ' ' '\n' | sort | uniq -u ))
 	for un_kp in "${vm_key_pairs[@]}"
 	do
